@@ -1,0 +1,20 @@
+{
+    "name": "telegiss/php.zone.prog",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+
+
+    "authors": [
+        {
+            "name": "sergey-telegin",
+            "email": "tssee.ram@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.5",
+      "ext-pdo": "*"
+    }
+}
