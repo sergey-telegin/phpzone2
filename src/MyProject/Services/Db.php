@@ -4,11 +4,12 @@ namespace App\MyProject\Services;
 
 use PDO;
 
-class db
+class Db
 {
+    private static $instance;
     private $pdo;
 
-    public function __construct()
+    private function __construct()
     {
         $dbParam = (require __DIR__ . '/../../settings.php')['db'];
 
@@ -20,7 +21,7 @@ class db
         $this->pdo->exec('SET NAMES UTF8');
     }
 
-    public function query(string $sql, $params = []): ?array
+    public function query(string $sql, array $params = [], string $className = 'stdClass')
     {
         $stm = $this->pdo->prepare($sql);
         $result = $stm->execute($params);
@@ -29,6 +30,16 @@ class db
             return null;
         }
 
-        return $stm->fetchAll();
+        return $stm->fetchAll(\PDO::FETCH_CLASS, $className);
+    }
+
+
+    public static function getInstance(): self
+    {
+
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+        return self::$instance;
     }
 }
